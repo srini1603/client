@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login'
 import Home from './components/Home';
 import ResumeGenerator from "./components/ResumeGenerator";

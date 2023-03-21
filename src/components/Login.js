@@ -1,7 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import $ from "jquery";
-import Home from "./Home";
+import { Button } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+
 import "../css/Login.css";
 import "../js/Login";
 const API = require("../API.json");
@@ -28,7 +34,7 @@ export default function Login() {
   const signIn = () => {
     if (userEmail == userPassWord) {
       window.location = "#/home";
-    } 
+    }
   };
   const POST_TO_DB = () => {
     console.log("proceedig");
@@ -55,50 +61,58 @@ export default function Login() {
   };
   return (
     <>
-      <div class="login-container">
-        <button
-          onClick={() => {
-            setShowSignIn(false);
-            setShowSignUp(true);
-          }}
-        >
-          SignUp
-        </button>
-        <button
-          onClick={() => {
-            setShowSignIn(true);
-            setShowSignUp(false);
-          }}
-        >
-          SignIn
-        </button>
-      </div>
-      {showSignIn ? (
-        <div id="login" className="login">
-          <h1>Sign IN</h1>
-          <label>
-            Email:
-            <input
-              type="Email"
-              name="Email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Password
-            <input
-              type="text"
-              name="Password"
-              value={userPassWord}
-              onChange={(e) => {
-                setUserPassWord(e.target.value);
-                setisCompany(false);
+      <Container className="mb-2">
+        <Row>
+          <Col>
+            <Button
+              onClick={() => {
+                setShowSignIn(false);
+                setShowSignUp(true);
               }}
-            />
-          </label>
-          <br/>
-          <button onClick={()=>signIn()}>Sign In</button>
+            >
+              SignUp
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              onClick={() => {
+                setShowSignIn(true);
+                setShowSignUp(false);
+              }}
+            >
+              SignIn
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+      {showSignIn ? (
+        <div>
+          <div id="login" className="login mb-2">
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Email address"
+              className="mb-3"
+            >
+              <Form.Control
+                type="email"
+                placeholder="name@example.com"
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="floatingPassword" label="Password">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={userPassWord}
+                onChange={(e) => {
+                  setUserPassWord(e.target.value);
+                  setisCompany(false);
+                }}
+              />
+            </FloatingLabel>
+          </div>
+          <Button onClick={() => signIn()}>Sign In</Button>
         </div>
       ) : (
         <></>
@@ -106,113 +120,139 @@ export default function Login() {
 
       {showSignUp ? (
         <>
-          <h1>Sign UP</h1>
-          <button
-            onClick={() => {
-              setShowSignUpAsUser(true);
-              setshowSignUpAsCompany(false);
-            }}
-          >
-            sign up as user
-          </button>
-          <button
-            onClick={() => {
-              setShowSignUpAsUser(false);
-              setshowSignUpAsCompany(true);
-            }}
-          >
-            sign up as company
-          </button>
+          <Container>
+            <Row>
+              <Col>
+                <Button
+                  onClick={() => {
+                    setShowSignUpAsUser(true);
+                    setshowSignUpAsCompany(false);
+                  }}
+                >
+                  sign up as user
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  onClick={() => {
+                    setShowSignUpAsUser(false);
+                    setshowSignUpAsCompany(true);
+                  }}
+                >
+                  sign up as company
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+
           {showSignUpAsUser ? (
             <div className="normal-user" id="normal-user">
-              <p>Sign Up as User to view Jobs</p>
-              <label>
-                Name:
-                <input
+              <h1>Sign Up as User to view Jobs</h1>
+
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Name"
+                className="mb-3"
+              >
+                <Form.Control
                   type="text"
-                  name="name"
-                  value={userName}
+                  placeholder="Name"
+                  value={userEmail}
                   onChange={(e) => setUserName(e.target.value)}
                 />
-              </label>
-              <label>
-                Email:
-                <input
-                  type="Email"
-                  name="Email"
+              </FloatingLabel>
+
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email address"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  placeholder="name@example.com"
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                 />
-              </label>
-              <label>
-                Password
-                <input
-                  type="text"
-                  name="Password"
+              </FloatingLabel>
+
+              <FloatingLabel controlId="floatingPassword" label="Password">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
                   value={userPassWord}
                   onChange={(e) => {
                     setUserPassWord(e.target.value);
                     setisCompany(false);
                   }}
                 />
-              </label>
-              <input value="false" name="isCompany" hidden={true} />
+              </FloatingLabel>
             </div>
           ) : (
             <div className="company-user" id="company-user">
-              <p>Sign Up as Company to Post Jobs</p>
-              <label>
-                Name:
-                <input
+              <h1>Sign Up as Company to Post Jobs</h1>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Name"
+                className="mb-3"
+              >
+                <Form.Control
                   type="text"
-                  name="name"
-                  value={userName}
+                  placeholder="Name"
+                  value={userEmail}
                   onChange={(e) => setUserName(e.target.value)}
                 />
-              </label>
-              <label>
-                Email:
-                <input
-                  type="Email"
-                  name="Email"
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email address"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  placeholder="name@example.com"
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                 />
-              </label>
-              <label>
-                Password
-                <input
-                  type="text"
-                  name="Password"
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingPassword"
+                label="Password"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
                   value={userPassWord}
                   onChange={(e) => {
                     setUserPassWord(e.target.value);
                     setisCompany(true);
                   }}
                 />
-              </label>
-              <label>
-                Website
-                <input
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingPassword"
+                label="Your Company Website"
+                className="mb-3"
+              >
+                <Form.Control
                   type="url"
-                  name="website"
+                  placeholder="www.dummy.com"
                   value={website}
                   onChange={(e) => {
                     setWebsite(e.target.value);
                     setisCompany(true);
                   }}
                 />
-              </label>
-              <input value="true" name="isCompany" hidden={true} />
+              </FloatingLabel>
             </div>
           )}
-          <button
+          <Button
             onClick={() => {
               signup();
             }}
           >
             SignUp
-          </button>
+          </Button>
         </>
       ) : (
         <></>
